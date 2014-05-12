@@ -1,0 +1,27 @@
+1.6.4:1.98.6969
+	New Bugfixes
+1.6.4:1.98.6968
+	I hate you
+1.7.2:1.90.1
+	this is a version for 1.7....
+1.6.4:1.26.87
+	1.6.4 introduced some new bugs
+	they're now fixed
+//this is a note
+1.8.4:1.383.032
+	this is a non-existent version
+1.6.4:1.21.0129.3
+	small bugfixes
+1.6.4:1.98.7000
+//thought: 70 < 6969, but would the version be higher? maybe just prohibit this: have to write it as 7000 or 69.69
+//as I would think 70 would be newer than 6969, but I would have to make the checking a lot slower to accommodate that
+	this should be the only one! and the others.....
+	123456789123456789123456789123456789123456789
+//as for length: that entire line fit, but it looks like the max
+	if others show up, something borke!
+1.6.4:2.00.5
+	version 2.0
+	I fixed some critical bugs
+1.6:2.01
+	added support for ranges
+	this version supports 1.6.2 and 1.6.4
