@@ -120,7 +120,7 @@ public class UpdateCheck {
 						return true;
 					}
 				}
-				else{//there's a fucking letter in here
+				else{//there's a letter in here
 					if(CurVersion.get(i).length()==FndVersion.get(i).length()){
 						try{
 						for(int j = 0; j<CurVersion.get(i).length(); j++){
@@ -140,7 +140,7 @@ public class UpdateCheck {
 						}
 						}
 						catch(Exception e){
-							return false;//something fucked up, just ignore that one then
+							return false;//something messed up, just ignore that one then
 						}
 					}
 					else if(CurVersion.get(i).length()>FndVersion.get(i).length()){
