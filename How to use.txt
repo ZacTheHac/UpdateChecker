@@ -1,0 +1,54 @@
+I have made this as easy as possible to use, but it's still a bit tricky without reading the whole sourcecode.
+	
+1) modifications required to UpdateChecker:
+		*change the line "package stabstabSTAB;" to "package *the name of your core package, or wherever, I don't care, but it will take further modifications elsewhere*"
+		*That should be it. The code does everything else automatically when a player logs in
+2) additions to your core mod loader:
+	*if you do not have an eventhandler for FMLInitializationEvent add this:
+			@EventHandler
+			public void load(FMLInitializationEvent event) {
+				MinecraftForge.EVENT_BUS.register(new UpdateCheck(metadata));
+			}
+	*If you already have that event, go ahead and just add 
+			MinecraftForge.EVENT_BUS.register(new UpdateCheck(metadata));
+		to it
+	*Now for the really important part: getting the mod's metadata so the Init event can use it and hand it off to the update checker
+		If you do not have a FMLPreInitializationEvent event handler set up, simply copy this in:
+					ModMetadata metadata;
+					@EventHandler
+					public void preInit(FMLPreInitializationEvent event) {
+						metadata=event.getModMetadata();
+						metadata.updateUrl="*LINK TO UPDATE FILE*";
+					}
+			If you already have the event, simply merge this code with what you already have 
+				(creating the "metadata" ModMetadata outside of the event is important, so it can be passed to the other event)
+		as a reference for the update file, here's the one I use for testing: https://dl.dropboxusercontent.com/u/35081624/Update.txt
+	*that should be it, the mod should be up and running. the rest of this file is dedicated to known caveats and whatnot
+
+Update file set-up:
+	*MC version the mod is for*:*Version of the mod*
+		if you put the beginning of an MC version, it'll check for that. IE: 1.6 will work on 1.6.2 and 1.6.4
+		the version of the mod should always stay the same length, if possible. if not: try splitting the version numbers more
+			a version of 8900 is seen as higher than 90 or 9, because it tries to read them as integers first, so either use 9000 or you have to do 89.00 to version 90
+			as a side note: letters work fine, it'll read that section character by character until it finds one that's different, and the one with a higher value is seen as newer
+				ex: 123 is before 123A which is before 123B
+		changelogs for the version follow right after, using a tab to denote them (\t)
+// 		note lines start with a double-slash. they are skipped by the file reader
+		the file reads from top-to-bottom, so use that how you will: put new versions at the top so they're printed first, or put it at the bottom to make it more like a list
+			I personally like adding to the bottom, because if they're a lot of revisions behind, the newest will always be visible (so long as you use a sane amount of change log lines)
+		if the UpdateChecker is unable to reach the URL, it just quits with no errors. I may make it spit out console errors in future revisions
+			if it's unable to read the MC version properly, it does spit an error into the console
+
+		
+Calling the update check manually: 
+	if, for some reason, you want to manually check for updates, simply call the CheckForUpdates() method, which will return a List<String> with the versions found and their change logs.
+	if you want it to print it to a specific player, you would have to do that yourself, My code only runs once per server, per session 
+		(I've seen update checkers that run every time you change dimension, it's annoying)
+		you could always borrow from Join(EntityJoinWorldEvent event)
+		and modify it to suit your needs.
+
+		
+		
+Licence summary: use this how you want, but you must provide the source code and attribution to me, and state any major changes you made 
+	(I don't care that you changed what package it was a part of, but if you make it read the file from bottom-to-top you must document that)
+	If you break something using my code, I'm not responsible
